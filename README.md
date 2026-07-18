@@ -1,2 +1,3 @@
-# project-snippets
-Code snippets and utility functions
+# Project Snippets
+
+Useful code snippets and utility functions.
