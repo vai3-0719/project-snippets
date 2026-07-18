@@ -1,0 +1,26 @@
+name: Daily Snippet Update
+
+on:
+  schedule:
+    - cron: '30 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate daily snippet index
+        run: |
+          echo "## Snippet Index" > INDEX.md
+          echo "Generated: $(date -u)" >> INDEX.md
+          echo "" >> INDEX.md
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update snippet index $(date -u '+%Y-%m-%d')" || true
+          git push
